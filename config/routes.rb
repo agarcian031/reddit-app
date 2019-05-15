@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root "subs#index"
 
   # Resource routing 
-  resources :subs #name of the controller 
+  resources :subs do  #name of the controller 
+    resources :topics
+  end  
 
   # Regular routing 
   # get "/subs", to: "subs#index"
