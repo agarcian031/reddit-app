@@ -1,0 +1,59 @@
+class SubsController < ApplicationController
+  def index
+    @subs = Sub.all 
+    # render :index 
+  end
+
+  def show
+    # url = /subs/2(:id)
+    #params = {id: 2}
+    @sub = Sub.find(params[:id])
+    #render :show 
+  end
+
+  def new
+    @sub = Sub.new 
+    # render: new 
+  end
+
+  def create
+    @sub = Sub.new(sub_params) #created an instance that is not saved
+    if @sub.save 
+      redirect_to @sub 
+      # will assume you're referencing -> 
+      #sub_path(@sub.id) 
+      #sub_path(@sub) 
+      #@sub 
+    else 
+      render :new 
+    end 
+  end 
+
+  def edit
+    # render :edit 
+    @sub = Sub.find(params[:id])
+  end
+
+  def update 
+    @sub = Sub.find(params[:id])
+    if @sub.update(sub_params)
+      redirect_to sub_path(@sub.id)
+    else
+      render :edit 
+    end 
+  end 
+
+  def destroy 
+    @sub = Sub.find(params[:id])
+    @sub.destroy 
+    redirect_to subs_path
+  end 
+
+  private 
+  # Everything under private will be a private method 
+  # can only access this method inside the file 
+  def sub_params
+    # params = {sub: { name: "Sub Name"}}
+    params.require(:sub).permit(:name)
+  end 
+end
